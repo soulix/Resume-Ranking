@@ -1,0 +1,15 @@
+Job title: Quality Analyst
+Experience: 3 to 5
+Qualification: BE
+Job description: Hands on implementation experience in CMMI Level 5 - Dev & ISO 9001
+Hands on experience in statistical tool
+Facilitate assigned projects teams & department to implement processes.
+Provide project & department progress updates on regular basis to Quality team lead.
+Conduct independent process implementation reviews & timely escalation of process-gaps for assigned projects by using monthly Process Compliance dashboard sheet Participate in internal & external audit as SQA for assigned projects.
+Facilitate closure of internal & external audit observations for assigned project & departments.
+Facilitate project team & department during RCA meeting.(Defects, Metrics, NC's)
+Skill set: ISO, CMMI, ISMS, python
+Collaboration
+Communication
+Resilience
+problem solver

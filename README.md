@@ -1,2 +1,1 @@
-# Resume-Ranking
-Automatic system to rank resume's based on Job Description
+# resumeranking get the text from docx,doc,rtf,txt and pdf
