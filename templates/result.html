@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="AI based Resume screening">
+<meta name="author" content="Evry">
+
+
+<link rel="shortcut icon" href="" type="image/x-icon">
+ <title>Evry-Resume Ranking</title>
+  
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}" >
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script>
+$(document).ready(function() {
+
+  function exportTableToCSV($table, filename) {
+
+    var $rows = $table.find('tr:has(td)'),
+
+     tmpColDelim = String.fromCharCode(11), // vertical tab character
+      tmpRowDelim = String.fromCharCode(0), // null character
+
+      colDelim = '","',
+      rowDelim = '"\r\n"',
+
+      // Grab text from table into CSV formatted string
+      csv = '"' + $rows.map(function(i, row) {
+        var $row = $(row),
+          $cols = $row.find('td');
+
+        return $cols.map(function(j, col) {
+          var $col = $(col),
+            text = $col.text();
+
+          return text;
+
+        }).get().join(tmpColDelim);
+
+      }).get().join(tmpRowDelim)
+      .split(tmpRowDelim).join(rowDelim)
+      .split(tmpColDelim).join(colDelim) + '"';
+  if (false && window.navigator.msSaveBlob) {
+
+      var blob = new Blob([decodeURIComponent(csv)], {
+        type: 'text/csv;charset=utf8'
+      });
+
+  
+      window.navigator.msSaveBlob(blob, filename);
+
+    } else if (window.Blob && window.URL) {
+      // HTML5 Blob        
+      var blob = new Blob([csv], {
+        type: 'text/csv;charset=utf-8'
+      });
+      var csvUrl = URL.createObjectURL(blob);
+
+      $(this)
+        .attr({
+          'download': filename,
+          'href': csvUrl
+        });
+    } else {
+      // Data URI
+      var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+
+      $(this)
+        .attr({
+          'download': filename,
+          'href': csvData,
+          'target': '_blank'
+        });
+    }
+  }
+
+  // This must be a hyperlink
+  $(".export").on('click', function(event) {
+    // CSV
+    var args = [$('#dvData>table'), 'ResumeRankingReport.csv'];
+
+    exportTableToCSV.apply(this, args);
+
+  
+  });
+});
+</script>
+<style>
+body {
+    background-image: url("./static/geometry.png");
+	background-position: top;
+}
+.main-div {
+  background: #ffffff none repeat scroll 0 0;
+  border-radius: 2px;
+  margin: 50px auto 30px;
+  max-width: 100%;
+  padding: 50px 70px 70px 71px;
+}
+table,th,td {
+  border: 1px solid black;
+}
+th{
+text-align: center;}
+
+</style>
+</head>
+
+<div id="dvData" style="display:none;">
+	<table>
+		<tr>
+			 <td>S.No.</td>
+			  <td>PhoneNo</td>
+			  <td>Email</td>
+			  <td>Experience</td>
+			  <td>JD (15%)</td>
+			  <td>skill (40%)</td>
+			  <td>exp (40%)</td>
+			  <td>Non_Tech Skills (5%)</td>
+			  <td>Rating(%)</td>
+			  <td>Resume</td>
+		</tr>
+		{% for r in results :%}
+				
+			  		<tr class="active"">
+						
+						<td>{{ loop.index0 }}</td>
+						<td>{{r.phoneNo}}</td>
+						<td>{{r.email}}</td>
+						<td>{{r.name}}</td>
+        				<td>{{r.jd}}</td>
+        				<td>{{r.skillRank}}</td>
+        				<td>{{r.exp}}</td>
+        				<td>{{r.nonTechSkills}}</td>
+        				<td>{{r.finalRank}}</td>
+        				<td><a href="{{url_for('custom_static', filename=r.filename)}}">{{r.filename}}</a></td>
+			  		</tr>
+				
+			{% endfor %}
+	</table>
+</div>
+
+<body data-gr-c-s-loaded="true">
+<img height="50px" src="{{ url_for('static', filename='Evry_logo.png') }}"/>
+  <div id="top" class="row site">
+    <div class="sm-12 md-8 col">
+      <div class="main-div">
+        <div class="demo-title">
+          <div class="row flex-center">
+            <div class="text-center">
+              
+              <h2 style="margin-left: 500px;">RESUME SCRUITNY SYSTEM</h2>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+    			<h3>Job Description</h3>
+    			{{ jd.to_html(classes="table table-striped") | safe}}
+    	</div>
+    	
+        <div class="section">
+        <div class="form-group">
+    			<h3>Resume Ranking</h3>
+    			
+    	</div>
+    	 <div class="form-group" style="margin-top: -49px;margin-left: 1111px;">
+    			<a id="export" data-export="export" class="export"><button type="button" class="btn btn-primary">Download</button></a>
+    	</div>  
+		
+            {% if session.logged_in %}
+           
+		<table class="table-hover">
+			<thead>
+			  <tr style="text-align: center;">
+			  <th>S.No.</th>
+			  <th>PhoneNo</th>
+			  <th>Email</th>
+			  <th>Experience</th>
+			  <th>JD (15%)</th>
+			  <th>skill (40%)</th>
+			  <th>exp (40%)</th>
+			  <th>Non_Tech Skills (5%)</th>
+			  <th>Rating(%)</th>
+			  <th>Resume</th>	  
+				
+			  </tr>
+			</thead>
+			{% for r in results :%}
+				<tbody>
+			  		<tr style="text-align: center;">
+						
+						<td>{{ loop.index0 }}</td>
+						<td>{{r.phoneNo}}</td>
+						<td>{{r.email}}</td>
+						<td>{{r.name}}</td>
+        				<td>{{r.jd}}</td>
+        				<td>{{r.skillRank}}</td>
+        				<td>{{r.exp}}</td>
+        				<td>{{r.nonTechSkills}}</td>
+        				<td>{{r.finalRank}}</td>
+        				<td><a href="{{url_for('custom_static', filename=r.filename)}}">{{r.filename}}</a></td>
+			  		</tr>
+				</tbody>
+			{% endfor %}
+
+		</table>
+<br>
+          <form action="/" method="GET" style="text-align:center">
+        
+            <button class="btn btn-primary" type="submit">Back</button>
+
+          </form>
+          {% endif %}
+	</div>
+
+
+          
+      </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+</body></html>

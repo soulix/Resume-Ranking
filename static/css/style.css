@@ -1,0 +1,38 @@
+.file {
+	visibility: hidden;
+	position: absolute;
+}
+
+/* 
+ * Styles for demo only 
+ */
+body {
+	background-color: #fff;
+	margin: 50px;
+}
+
+.container {
+	background-color: #fff;
+	padding: 60px 80px;
+	border-radius: 8px;
+	box-shadow: 0px 0px 24.08px 3.92px rgba(0, 0, 0, 0.25);
+}
+
+h1 {
+	color: #fff;
+	font-size: 3rem;
+	font-weight: 900;
+	margin: 0 0 5rem 0;
+	background: -webkit-linear-gradient(#fff, #999);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}
+
+.btn.btn-primary {
+	background-color: #007bff;
+	border-color: #007bff;
+	outline: none;
+	color: #fff;
+}
+.table thead tr{text-align:center !important;}

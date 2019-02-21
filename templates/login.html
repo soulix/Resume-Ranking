@@ -1,0 +1,55 @@
+<!doctype html>
+<head>
+
+<title>EVRY-Resume Ranking</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}" >
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<style>
+body {
+    background-image: url("./static/geometry.png");
+	background-position: top;
+}
+.main-div {
+  background: #ffffff none repeat scroll 0 0;
+  border-radius: 2px;
+  margin: 50px auto 30px;
+  max-width: 38%;
+  padding: 50px 70px 70px 71px;
+}
+</style>
+</head>
+<body translate="no">
+	
+	<img height="50px" src="{{ url_for('static', filename='Evry_logo.png') }}"/>
+	<div class="container">
+	<div class="main-div">
+
+  <h2>Login</h2>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }} </p> {% endif %}
+  
+  <form action="{{ url_for('login') }}" method=post>
+  <div class="form-group">
+  
+      Username:
+	  </div>
+	  <div class="form-group"><input required placeholder="username" type=text name=username>
+	  </div>
+	  <div class="form-group">
+      Password:
+	  </div>
+	  <div class="form-group">
+      <input type=password required placeholder="password"  name=password>
+	  </div>
+	  <div class="form-group">
+	  
+      <input class="btn btn-primary"  type=submit value=Login>
+	  <input class="btn btn-primary"  type=reset value=Reset>
+  </form>
+
+</div>
+ </div>
+</body>
+</html>
+
